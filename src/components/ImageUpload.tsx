@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { uploadData } from 'aws-amplify/storage';
 
 const ImageUpload: React.FC = () => {
-  const [file, setFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // ファイル選択時に呼ばれる関数
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setFile(event.target.files[0]);
+      setSelectedFile(event.target.files[0]);
     }
   };
 
+  // 画像をリサイズする関数 (縦横比を維持し、縦または横のいずれかが最大値に収まる)
   const resizeImage = (file: File, maxWidth: number, maxHeight: number) => {
     return new Promise<File>((resolve) => {
       const img = new Image();
@@ -27,6 +29,7 @@ const ImageUpload: React.FC = () => {
         let width = img.width;
         let height = img.height;
 
+        // 縦横比を維持しながら、最大幅または最大高さに収める
         if (width > height) {
           if (width > maxWidth) {
             height = Math.floor((height * maxWidth) / width);
@@ -52,9 +55,10 @@ const ImageUpload: React.FC = () => {
     });
   };
 
+  // 画像をアップロードする関数
   const handleUpload = async () => {
-    if (file) {
-      const resizedImage = await resizeImage(file, 800, 800);
+    if (selectedFile) {
+      const resizedImage = await resizeImage(selectedFile, 800, 800);
       const fileName = `picture-submissions/${Date.now()}_${resizedImage.name}`;
       await uploadData({
         path: fileName,
@@ -66,7 +70,7 @@ const ImageUpload: React.FC = () => {
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleChange} />
+      <input type="file" accept="image/*" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
     </div>
   );

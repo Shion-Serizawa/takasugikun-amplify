@@ -36,7 +36,7 @@ const InvokeBedrock: React.FC = () => {
     }
 
     return (
-        <p>
+        <div>
             <textarea
                 onChange={(e) => setPrompt(e.target.value)}
                 value={prompt}
@@ -45,7 +45,7 @@ const InvokeBedrock: React.FC = () => {
             <br />
             <button onClick={invokeBedrock}>invokeBedrock</button>
             <div style={{ width: '50vw', textAlign: 'left' }}>{aiMessage}</div>
-        </p>
+        </div>
     )
 }
 

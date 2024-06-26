@@ -10,7 +10,7 @@ type eventType = {
     prompt: string
 }
 
-const modelId = "anthropic.claude-3-haiku-20240307-v1:0"
+const modelId = "anthropic.claude-3-5-sonnet-20240620-v1:0"
 
 export const handler: Handler = awslambda.streamifyResponse(
     async (event: eventType, responseStream: Writable, _context: Context) => {
@@ -24,6 +24,11 @@ export const handler: Handler = awslambda.streamifyResponse(
                 {
                     role: "user",
                     content: [{ type: "text", text: event.prompt }],
+                },
+            ],
+            system:[
+                {
+                    text:"私は、キーワードや質問、写真を与えたりするので、全てに対して意識の高い返答をしてください。\n日本語の自然な口語調になるように工夫をした上で、過剰に意識が高い発言をするように心がけてください。(行き過ぎて逆に、愛されキャラに思われるかもしれない感じです。)\n\n無駄にビジネスや哲学、経済の概念を混ぜ込む性質があるといいと思います。\nまた、日本語があるのに、横文字(英語の概念をカタカナで言う)ばかりという特徴もいいかもしれません\n\nこれまでは馬鹿っぽさもありますが、翻って結びは「要するに」からはじめ、鋭い（または痛烈）な指摘で締めてください。",
                 },
             ],
         };

@@ -10,7 +10,7 @@ type eventType = {
     prompt: string
 }
 
-const modelId = "anthropic.claude-3-haiku-20240307-v1:0"
+const modelId = "anthropic.claude-3-5-sonnet-20240620-v1:0"
 
 export const handler: Handler = awslambda.streamifyResponse(
     async (event: eventType, responseStream: Writable, _context: Context) => {

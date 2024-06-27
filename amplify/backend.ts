@@ -4,6 +4,7 @@ import { data } from './data/resource';
 import { storage } from './storage/resource';
 import { helloworld } from './function/hello-world/resource';
 import { invokeBedrock } from './function/invoke-bedrock/resource'
+import { invokeMulti } from './function/invoke-multi/resource'
 import * as iam from 'aws-cdk-lib/aws-iam';
 
 const backend = defineBackend({
@@ -12,11 +13,13 @@ const backend = defineBackend({
   storage,
   helloworld,
   invokeBedrock,
+  invokeMulti,
 });
 
 const authenticatedUserIamRole = backend.auth.resources.authenticatedUserIamRole;
 backend.helloworld.resources.lambda.grantInvoke(authenticatedUserIamRole);
 backend.invokeBedrock.resources.lambda.grantInvoke(authenticatedUserIamRole);
+backend.invokeMulti.resources.lambda.grantInvoke(authenticatedUserIamRole);
 
 const bedrockStatement = new iam.PolicyStatement({
   actions: ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"],
@@ -24,10 +27,12 @@ const bedrockStatement = new iam.PolicyStatement({
 });
 
 backend.invokeBedrock.resources.lambda.addToRolePolicy(bedrockStatement);
+backend.invokeMulti.resources.lambda.addToRolePolicy(bedrockStatement);
 
 backend.addOutput({
   custom: {
     helloworldFunctionName: backend.helloworld.resources.lambda.functionName,
     invokeBedrockFunctionName: backend.invokeBedrock.resources.lambda.functionName,
+    invokeMultiFunctionName: backend.invokeMulti.resources.lambda.functionName,
   },
 });

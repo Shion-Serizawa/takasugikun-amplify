@@ -42,7 +42,7 @@ const InvokeMultiModal: React.FC = () => {
             ></textarea>
             <br />
             <button onClick={invokeMultimodal}>invokeMultimodal</button>
-            <div style={{ width: '50vw', textAlign: 'left' }}>{aiMessage}</div>
+            <div className="response-container">{aiMessage}</div>
         </div>
     );
 };

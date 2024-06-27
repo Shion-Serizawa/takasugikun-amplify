@@ -44,7 +44,7 @@ const InvokeBedrock: React.FC = () => {
             ></textarea>
             <br />
             <button onClick={invokeBedrock}>invokeBedrock</button>
-            <div style={{ width: '50vw', textAlign: 'left' }}>{aiMessage}</div>
+            <div className="response-container">{aiMessage}</div>
         </div>
     )
 }

@@ -113,3 +113,14 @@ textarea {
 .container img {
   margin-bottom: 20px;
 }
+
+.response-container {
+  width: 100%;
+  max-height: 300px; /* 必要に応じて調整 */
+  overflow-y: auto;
+  padding: 10px;
+  border: 2px solid #1a1a1a;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-top: 10px;
+}
